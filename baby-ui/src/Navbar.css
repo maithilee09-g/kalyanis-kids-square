@@ -1,0 +1,172 @@
+.navbar-container {
+  font-family: 'Outfit', sans-serif;
+  background: var(--white);
+  border-bottom: 2px solid var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+.top-banner {
+  background: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 50px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex: 1;
+}
+
+.header-center {
+  flex: 2;
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.logo-container:hover {
+  transform: scale(1.05);
+}
+
+.logo-img {
+  height: 70px;
+  width: auto;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.05));
+}
+
+.logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: 4px; /* Matches the KALKI spaced-out look */
+  text-transform: uppercase;
+}
+
+.nav-icon {
+  font-size: 24px;
+  color: var(--text);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.nav-icon:hover {
+  color: var(--primary);
+  transform: translateY(-3px);
+}
+
+.badge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background-color: var(--primary);
+  color: white;
+  font-size: 11px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 800;
+  border: 2px solid white;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 15px 0 25px 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #555;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 8px 20px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+}
+
+.nav-link:hover {
+  color: var(--primary);
+  transform: none;
+}
+
+/* 🎨 PASTEL HOVER STATES */
+.girls-link:hover { color: #fff !important; background-color: var(--primary) !important; border-color: var(--primary) !important; }
+.boys-link:hover { color: #fff !important; background-color: var(--secondary) !important; border-color: var(--secondary) !important; }
+.toys-link:hover { color: #fff !important; background-color: var(--warm) !important; border-color: var(--warm) !important; }
+.accessories-link:hover { color: #fff !important; background-color: var(--accent) !important; border-color: var(--accent) !important; }
+.footwear-link:hover { color: #fff !important; background-color: #e0bbff !important; border-color: #e0bbff !important; }
+.store-link:hover { color: #fff !important; background-color: var(--primary) !important; border-color: var(--primary) !important; }
+
+/* Search Overlay Styling */
+.search-container {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 1px solid #eee;
+  transition: all 0.3s;
+}
+
+.search-container:hover {
+  background: white;
+  border-color: var(--secondary);
+  box-shadow: 0 5px 15px rgba(167,199,231,0.2);
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  padding: 5px 10px;
+  font-size: 14px;
+  outline: none;
+  width: 150px;
+  font-family: inherit;
+  color: var(--text);
+}
+
+.admin-icon {
+  border-left: 2px dashed #eee;
+  padding-left: 20px;
+  margin-left: 10px;
+}

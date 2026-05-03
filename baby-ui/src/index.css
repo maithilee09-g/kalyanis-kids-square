@@ -1,0 +1,36 @@
+:root {
+  --primary: #F9A8D4;    /* Medium Petal Pink */
+  --secondary: #B9E2FA;  /* Soft Blue */
+  --accent: #FFDAB9;     /* Peach */
+  --warm: #FAF9F6;       /* Linen White */
+  --text: #4A4A4A;
+  --bg: #FAF9F6;         /* Linen White */
+  --white: #FFFFFF;
+  --shadow: rgba(0, 0, 0, 0.06);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 14px; /* Dainty font size */
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
