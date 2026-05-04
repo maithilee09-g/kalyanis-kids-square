@@ -67,7 +67,7 @@ const Payment = ({ cart, clearCart }) => {
     };
 
     try {
-      const response = await fetch("${API_URL}/orders", {
+      const response = await fetch(`${API_URL}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderData)
@@ -96,7 +96,7 @@ const Payment = ({ cart, clearCart }) => {
     setLoading(true);
     try {
       // 1. Create order on backend
-      const orderRes = await fetch("${API_URL}/razorpay-order", {
+      const orderRes = await fetch(`${API_URL}/razorpay-order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: total })
@@ -113,7 +113,7 @@ const Payment = ({ cart, clearCart }) => {
         order_id: orderData.id,
         handler: async function (response) {
           // 3. Verify payment on backend
-          const verifyRes = await fetch("${API_URL}/razorpay-verify", {
+          const verifyRes = await fetch(`${API_URL}/razorpay-verify`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
