@@ -23,7 +23,7 @@ function Admin() {
 
   const fetchOrders = () => {
     setLoadingOrders(true);
-    fetch("${API_URL}/orders")
+    fetch(`${API_URL}/orders`)
       .then((res) => res.json())
       .then((data) => {
         setOrders(data);
@@ -37,7 +37,7 @@ function Admin() {
 
   const fetchProducts = () => {
     setLoadingProducts(true);
-    fetch("${API_URL}/products")
+    fetch(`${API_URL}/products`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
@@ -81,7 +81,7 @@ function Admin() {
     formData.append("image", image);
 
     try {
-      const response = await fetch("${API_URL}/products", {
+      const response = await fetch(`${API_URL}/products`, {
         method: "POST",
         body: formData,
       });
