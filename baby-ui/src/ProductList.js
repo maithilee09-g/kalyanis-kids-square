@@ -244,8 +244,8 @@ function ProductList({ addToCart }) {
       }}>
         {filteredProducts.length === 0 ? (
           <div style={{ gridColumn: "1/-1", textAlign: "center", padding: "100px" }}>
-            <h2 style={{ color: "var(--primary)", fontSize: "2.5rem" }}>Oops! No items found 🧸</h2>
-            <p>Try exploring another category!</p>
+            <h2 style={{ color: "var(--primary)", fontSize: "2.2rem" }}>No products found</h2>
+            <p>Try selecting a different filter or search term.</p>
           </div>
         ) : (
           filteredProducts.map(product => (
@@ -325,7 +325,7 @@ function ProductList({ addToCart }) {
                 onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#ffb2c1"; e.currentTarget.style.transform = "scale(1.05)"; }}
                 onMouseLeave={e => { e.currentTarget.style.backgroundColor = "var(--primary)"; e.currentTarget.style.transform = "scale(1)"; }}
               >
-                Add to Cart 🛒
+                Add to Cart
               </button>
             </div>
           ))

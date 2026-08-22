@@ -42,14 +42,13 @@ function ProductDetails({ addToCart, addToWishlist }) {
     setIsAiCalculating(true);
     setAiRecommendation(null);
 
-    // Simulate "AI" thinking
     setTimeout(() => {
       const { age, height, weight } = advisorData;
       const h = parseFloat(height);
       const w = parseFloat(weight);
       const a = parseFloat(age);
 
-      let recommended = "M"; // Default
+      let recommended = "M";
 
       if (h < 75 || w < 9 || a < 12) {
         recommended = "S";
@@ -61,11 +60,11 @@ function ProductDetails({ addToCart, addToWishlist }) {
 
       setAiRecommendation(recommended);
       setIsAiCalculating(false);
-      setSize(recommended); // Auto-select the size
+      setSize(recommended);
     }, 1500);
   };
 
-  if (!product) return <div style={{ textAlign: "center", padding: "100px" }}><h2 style={{ color: "var(--primary)" }}>Gathering details... ✨</h2></div>;
+  if (!product) return <div style={{ textAlign: "center", padding: "100px" }}><h2 style={{ color: "var(--primary)" }}>Loading product details...</h2></div>;
 
   return (
     <div style={{ padding: "30px 20px", backgroundColor: "var(--bg)", minHeight: "100vh" }}>
@@ -113,13 +112,12 @@ function ProductDetails({ addToCart, addToWishlist }) {
                 justifyContent: "center",
                 cursor: "pointer",
                 transition: "all 0.3s",
-                fontSize: "1.2rem",
                 color: "#ff6b81"
               }}
               onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#fff0f3"; e.currentTarget.style.borderColor = "#ffccd5"; }}
               onMouseLeave={e => { e.currentTarget.style.backgroundColor = "white"; e.currentTarget.style.borderColor = "#eee"; }}
             >
-              ❤
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
             </button>
           </div>
           <p style={{ color: "#d63384", fontSize: "1.3rem", fontWeight: "800", marginBottom: "20px" }}>
@@ -134,7 +132,7 @@ function ProductDetails({ addToCart, addToWishlist }) {
                   onClick={() => setShowAdvisor(!showAdvisor)}
                   style={{ background: "none", border: "none", color: "#333", fontSize: "0.75rem", fontWeight: "700", cursor: "pointer", textDecoration: "underline" }}
                 >
-                  {showAdvisor ? "Close Advisor" : "AI Size Advisor "}
+                  {showAdvisor ? "Close Advisor" : "AI Size Advisor"}
                 </button>
               </div>
 
@@ -168,7 +166,7 @@ function ProductDetails({ addToCart, addToWishlist }) {
                     disabled={isAiCalculating || !advisorData.age || !advisorData.height || !advisorData.weight}
                     style={{ width: "100%", padding: "12px", background: "#333", color: "white", border: "none", borderRadius: "12px", cursor: "pointer", fontWeight: "700", fontSize: "0.9rem" }}
                   >
-                    {isAiCalculating ? "AI is Analyzing..." : "Get Recommended Size 🔥"}
+                    {isAiCalculating ? "Calculating Best Size..." : "Get Recommended Size"}
                   </button>
 
                   {aiRecommendation && (
@@ -237,7 +235,7 @@ function ProductDetails({ addToCart, addToWishlist }) {
               onMouseEnter={e => e.currentTarget.style.transform = "translateY(-3px)"}
               onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
             >
-              Add to Cart 🛒
+              Add to Cart
             </button>
 
             <button
@@ -258,7 +256,7 @@ function ProductDetails({ addToCart, addToWishlist }) {
               onMouseEnter={e => e.currentTarget.style.transform = "translateY(-3px)"}
               onMouseLeave={e => e.currentTarget.style.transform = "translateY(0)"}
             >
-              Buy Now ⚡
+              Buy Now
             </button>
           </div>
 
@@ -269,7 +267,7 @@ function ProductDetails({ addToCart, addToWishlist }) {
       {matchingProducts.length > 0 && (
         <div style={{ maxWidth: "700px", margin: "40px auto 0 auto" }}>
           <h3 style={{ fontSize: "1.1rem", color: "var(--text)", marginBottom: "20px", fontFamily: "'Outfit', sans-serif", borderBottom: "2px solid #eee", paddingBottom: "10px" }}>
-            Complete the Look ✨ <span style={{ fontSize: "0.8rem", color: "#888", fontWeight: "normal" }}>(Smart Match)</span>
+            Complete the Look <span style={{ fontSize: "0.8rem", color: "#888", fontWeight: "normal" }}>(Smart Match)</span>
           </h3>
           <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
             {matchingProducts.map(match => (
@@ -294,7 +292,7 @@ function ProductDetails({ addToCart, addToWishlist }) {
                   onClick={() => addToCart({...match, size: "M", quantity: 1})}
                   style={{ width: "100%", padding: "8px", background: "#333", color: "white", border: "none", borderRadius: "10px", cursor: "pointer", fontSize: "0.75rem", fontWeight: "700" }}
                 >
-                  Add Matching 🛒
+                  Add Matching
                 </button>
               </div>
             ))}

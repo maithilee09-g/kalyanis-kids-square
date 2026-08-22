@@ -3,17 +3,18 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./Payment.css";
 import API_URL from "./api";
 
-const Payment = ({ cart, clearCart }) => {
+const Payment = ({ cart, clearCart, currentUser }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    address: "",
-    city: "",
-    zip: "",
+    name: currentUser?.name || "",
+    email: currentUser?.email || "",
+    phone: currentUser?.phone || "",
+    address: currentUser?.address || "",
+    city: currentUser?.city || "Pune",
+    zip: currentUser?.zip || "411001",
     cardNumber: "",
     expiry: "",
     cvv: "",
@@ -58,6 +59,7 @@ const Payment = ({ cart, clearCart }) => {
     const orderData = {
       customerName: formData.name,
       email: formData.email,
+      phone: formData.phone || "",
       address: formData.address,
       city: formData.city,
       zip: formData.zip,

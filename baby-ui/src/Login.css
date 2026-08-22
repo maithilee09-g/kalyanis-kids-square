@@ -1,137 +1,767 @@
+/* ==========================================================================
+   KALYANI'S KIDS SQUARE — LOGIN & CUSTOMER ACCOUNT PORTAL STYLES
+   ========================================================================== */
+
+.login-page-bg {
+  min-height: 85vh;
+  background: radial-gradient(circle at 10% 20%, #fdf2f8 0%, #f8fafc 90%);
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+}
+
 .login-container {
-  min-height: 100vh;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* Notification Toast */
+.auth-toast {
+  padding: 12px 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-align: center;
+  animation: slideDown 0.2s ease-out;
+}
+
+.auth-toast.success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.auth-toast.danger {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* Main Card */
+.login-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 36px 32px;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07), 0 0 1px 1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+}
+
+/* Role Selector Tabs */
+.auth-role-tabs {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 14px;
+  padding: 4px;
+  margin-bottom: 24px;
+  gap: 4px;
+}
+
+.role-tab-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #64748b;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, rgba(253, 251, 251, 0.8) 0%, rgba(235, 237, 238, 0.8) 100%), 
-              url('https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-  background-size: cover;
-
-
-  background-position: center;
-  padding: 20px;
-  font-family: 'Inter', sans-serif;
+  gap: 6px;
 }
 
-.login-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-radius: 24px;
-  padding: 40px;
-  width: 100%;
-  max-width: 450px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  animation: slideUp 0.6s ease-out;
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+.role-tab-btn.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .login-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 
 .login-header h2 {
-  font-size: 2rem;
-  color: #131921;
-  margin-bottom: 8px;
-  font-weight: 700;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.3px;
 }
 
 .login-header p {
-  color: #666;
-  font-size: 0.95rem;
+  color: #64748b;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.admin-badge-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f472b6, #ec4899);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin: 0 auto 12px;
+  box-shadow: 0 6px 16px rgba(236, 72, 153, 0.25);
+}
+
+.admin-badge-icon.small {
+  width: 42px;
+  height: 42px;
+  font-size: 1.2rem;
+}
+
+/* Forms */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #333;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #334155;
 }
 
 .form-group input {
-  width: 100%;
-  padding: 12px 16px;
+  padding: 12px 14px;
   border-radius: 12px;
-  border: 2px solid #eee;
+  border: 1.5px solid #e2e8f0;
+  font-size: 0.92rem;
   outline: none;
-  transition: all 0.3s ease;
-  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
 .form-group input:focus {
-  border-color: #febd69;
-  box-shadow: 0 0 0 4px rgba(254, 189, 105, 0.1);
+  border-color: #ec4899;
+  box-shadow: 0 0 0 3px #fdf2f8;
 }
 
-.login-btn {
+.auth-submit-btn {
   width: 100%;
-  padding: 14px;
-  background-color: #131921;
-  color: white;
-  border: none;
+  padding: 13px;
   border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
+  transition: all 0.2s ease;
+  margin-top: 6px;
 }
 
-.login-btn:hover {
-  background-color: #232f3e;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+.auth-submit-btn.primary {
+  background: linear-gradient(135deg, #f472b6, #ec4899);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25);
+}
+
+.auth-submit-btn.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(236, 72, 153, 0.35);
+}
+
+.auth-submit-btn.admin-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+.auth-submit-btn.admin-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.auth-submit-btn.secondary {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.auth-submit-btn.small {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  width: fit-content;
+}
+
+/* Quick Demo Controls */
+.quick-demo-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.demo-divider-text {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.quick-demo-customer-btn, .quick-demo-admin-btn {
+  width: 100%;
+  padding: 10px;
+  background: #fdf2f8;
+  border: 1.5px dashed #f472b6;
+  border-radius: 12px;
+  color: #db2777;
+  font-weight: 700;
+  font-size: 0.84rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-demo-admin-btn {
+  background: #eef2ff;
+  border-color: #818cf8;
+  color: #4f46e5;
+}
+
+.quick-demo-customer-btn:hover, .quick-demo-admin-btn:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
 }
 
 .toggle-mode {
   text-align: center;
-  margin-top: 25px;
-  font-size: 0.9rem;
-  color: #555;
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: #64748b;
 }
 
 .toggle-mode span {
-  color: #131921;
+  color: #ec4899;
   font-weight: 700;
   cursor: pointer;
   text-decoration: underline;
 }
 
-.social-login {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.admin-switch-footer {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
 }
 
-.social-btn {
+.switch-to-admin-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.switch-to-admin-btn:hover {
+  color: #6366f1;
+}
+
+/* ==========================================================================
+   👤 LOGGED-IN CUSTOMER ACCOUNT PORTAL
+   ========================================================================== */
+.account-container {
+  width: 100%;
+  max-width: 900px;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.account-hero-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  padding: 28px;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.account-avatar-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f472b6, #ec4899);
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  background: white;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: background 0.2s;
+  box-shadow: 0 6px 16px rgba(236, 72, 153, 0.3);
+  flex-shrink: 0;
 }
 
-.social-btn:hover {
-  background: #f9f9f9;
+.account-info-main {
+  flex: 1;
+}
+
+.account-info-main h2 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.account-email {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0 0 8px 0;
+}
+
+.member-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.account-hero-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.portal-btn {
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.portal-btn.primary {
+  background: #ec4899;
+  color: #ffffff;
+}
+
+.portal-btn.admin-portal-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(99, 102, 241, 0.25);
+}
+
+.portal-btn.admin-portal-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.portal-btn.secondary {
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+}
+
+.portal-btn.secondary:hover {
+  background: #e2e8f0;
+}
+
+.portal-btn.logout {
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.portal-btn.logout:hover {
+  background: #fca5a5;
+  color: #991b1b;
+}
+
+.portal-btn.small {
+  padding: 6px 12px;
+  font-size: 0.78rem;
+}
+
+/* Account Tabs */
+.account-tabs-strip {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.acc-tab-btn {
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.acc-tab-btn.active {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+/* Section Card */
+.account-section-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  padding: 28px;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 14px;
+}
+
+.section-heading {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 2px 0;
+}
+
+.section-subtext {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* User Orders List */
+.user-orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.user-order-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px;
+  background: #fafbfc;
+  transition: all 0.2s ease;
+}
+
+.user-order-item:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.user-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+
+.order-id-label {
+  display: block;
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 0.95rem;
+}
+
+.order-date-text {
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.order-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-status-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.user-status-pill.Delivered { background: #dcfce7; color: #166534; }
+.user-status-pill.Shipped { background: #e0e7ff; color: #3730a3; }
+.user-status-pill.Processing { background: #fef9c3; color: #854d0e; }
+
+.order-amt {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ec4899;
+}
+
+.user-order-body {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .user-order-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.order-items-preview-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.user-item-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+}
+
+.item-thumb-small {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.item-meta-text {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.82rem;
+}
+
+.item-meta-text strong {
+  color: #0f172a;
+}
+
+.item-meta-text span {
+  color: #64748b;
+  font-size: 0.75rem;
+}
+
+.order-delivery-snippet {
+  font-size: 0.82rem;
+  color: #475569;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.tracking-active-badge {
+  background: #eff6ff;
+  color: #1d4ed8;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.78rem;
+  margin: 6px 0;
+}
+
+.invoice-btn-row {
+  margin-top: 8px;
+}
+
+.invoice-view-btn {
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ec4899;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.invoice-view-btn:hover {
+  background: #fdf2f8;
+  border-color: #ec4899;
+}
+
+/* Profile Grid */
+.profile-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.profile-field-box {
+  padding: 14px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+}
+
+.profile-field-box label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.field-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* Saved Address Card */
+.saved-address-card {
+  margin-top: 16px;
+  padding: 20px;
+  background: #fdf2f8;
+  border: 1.5px solid #fbcfe8;
+  border-radius: 16px;
+  max-width: 440px;
+}
+
+.address-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #db2777;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.saved-address-card h4 {
+  margin: 0 0 6px 0;
+  font-size: 1.05rem;
+  color: #0f172a;
+}
+
+.address-lines {
+  font-size: 0.88rem;
+  color: #475569;
+  line-height: 1.4;
+  margin: 0 0 8px 0;
+}
+
+.address-contact {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+  margin: 0;
+}
+
+/* Admin Status Box */
+.admin-status-box {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.admin-status-box h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+}
+
+.admin-status-box p {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+.admin-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Customer Printable Invoice Modal */
+.invoice-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.invoice-modal-box {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 28px;
+  max-width: 540px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.invoice-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 10px;
+}
+
+.user-invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 0.88rem;
+}
+
+.user-invoice-table th {
+  background: #f8fafc;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.user-invoice-table td {
+  padding: 8px;
+  border-bottom: 1px solid #f1f5f9;
 }

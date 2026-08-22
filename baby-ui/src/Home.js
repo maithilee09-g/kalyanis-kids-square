@@ -64,7 +64,7 @@ function Home({ addToCart }) {
     return () => clearInterval(interval);
   }, []);
 
-  if (loading) return <div style={{ padding: "100px", textAlign: "center", color: "var(--primary)" }}><h2>Preparing the magic... ✨</h2></div>;
+  if (loading) return <div style={{ padding: "100px", textAlign: "center", color: "var(--primary)" }}><h2>Loading collections...</h2></div>;
 
   return (
     <div style={{ backgroundColor: "var(--bg)", minHeight: "100vh" }}>
@@ -327,7 +327,7 @@ function ProductCard({ product, addToCart, navigate }) {
           boxShadow: "0 5px 15px rgba(0,0,0,0.05)",
           color: "var(--primary)"
         }}>
-          ♥
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
         </div>
       </div>
       <div style={{ padding: "20px", textAlign: "center" }}>
@@ -353,7 +353,7 @@ function ProductCard({ product, addToCart, navigate }) {
           onMouseEnter={e => { e.currentTarget.style.backgroundColor = "#F472B6"; e.currentTarget.style.boxShadow = "0 8px 20px rgba(249, 168, 212, 0.4)"; }}
           onMouseLeave={e => { e.currentTarget.style.backgroundColor = "var(--primary)"; e.currentTarget.style.boxShadow = "0 8px 15px rgba(249, 168, 212, 0.2)"; }}
         >
-          Add to Cart 🛒
+          Add to Cart
         </button>
       </div>
     </div>
