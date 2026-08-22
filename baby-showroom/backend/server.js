@@ -36,13 +36,33 @@ app.get("/", (req, res) => {
   res.send("Server is working ✅");
 });
 
-/* ================= MONGODB ================= */
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected ✅"))
-  .catch((err) =>
-    console.log("MongoDB Connection Error ❌:", err.message)
-  );
+/* ================= MONGODB (PERSISTENT AUTO-RECONNECT) ================= */
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      maxPoolSize: 10,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      family: 4 // Use IPv4 for stability
+    });
+    console.log("MongoDB Connected Successfully");
+  } catch (err) {
+    console.error("MongoDB Connection Error:", err.message);
+    // Retry connection after 5 seconds
+    setTimeout(connectDB, 5000);
+  }
+};
+
+connectDB();
+
+mongoose.connection.on("disconnected", () => {
+  console.log("MongoDB Disconnected. Attempting auto-reconnect...");
+  setTimeout(connectDB, 5000);
+});
+
+mongoose.connection.on("reconnected", () => {
+  console.log("MongoDB Reconnected Successfully");
+});
 
 /* ================= MODEL ================= */
 const productSchema = new mongoose.Schema({
@@ -51,6 +71,9 @@ const productSchema = new mongoose.Schema({
   subcategory: String,
   price: Number,
   image: String,
+  stock: { type: Number, default: 25 },
+  description: { type: String, default: "" },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const Product =
@@ -59,14 +82,19 @@ const Product =
 const orderSchema = new mongoose.Schema({
   customerName: String,
   email: String,
+  phone: { type: String, default: "" },
   address: String,
   city: String,
   zip: String,
   totalAmount: Number,
   items: Array,
   paymentMethod: { type: String, default: "card" },
-  createdAt: { type: Date, default: Date.now }
-
+  paymentId: { type: String, default: "" },
+  orderId: { type: String, default: "" },
+  status: { type: String, default: "Processing" }, // Processing, Shipped, Delivered, Cancelled
+  trackingNumber: { type: String, default: "" },
+  courier: { type: String, default: "" },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
@@ -134,7 +162,8 @@ app.post("/razorpay-verify", async (req, res) => {
         ...orderDetails,
         paymentMethod: "razorpay",
         paymentId: razorpay_payment_id,
-        orderId: razorpay_order_id
+        orderId: razorpay_order_id,
+        status: "Processing"
       });
       await newOrder.save();
       return res.status(200).json({ message: "Payment verified successfully! ✅" });
@@ -156,10 +185,58 @@ app.get("/orders", async (req, res) => {
   }
 });
 
+/* ================= UPDATE ORDER STATUS ================= */
+app.patch("/orders/:id/status", async (req, res) => {
+  try {
+    const { status, trackingNumber, courier } = req.body;
+    const update = {};
+    if (status) update.status = status;
+    if (trackingNumber !== undefined) update.trackingNumber = trackingNumber;
+    if (courier !== undefined) update.courier = courier;
+
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      update,
+      { new: true }
+    );
+    if (!order) return res.status(404).json({ error: "Order not found" });
+    res.json({ message: "Order status updated! ✅", order });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= UPDATE ORDER TRACKING ================= */
+app.patch("/orders/:id/tracking", async (req, res) => {
+  try {
+    const { trackingNumber, courier } = req.body;
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      { trackingNumber, courier },
+      { new: true }
+    );
+    if (!order) return res.status(404).json({ error: "Order not found" });
+    res.json({ message: "Tracking info updated! 🚚", order });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= DELETE ORDER ================= */
+app.delete("/orders/:id", async (req, res) => {
+  try {
+    const deleted = await Order.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ error: "Order not found" });
+    res.json({ message: "Order deleted successfully! 🗑️" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 /* ================= ADD PRODUCT ================= */
 app.post("/products", upload.single("image"), async (req, res) => {
   try {
-    const { name, category, subcategory, price } = req.body;
+    const { name, category, subcategory, price, stock, description } = req.body;
     const image = req.file ? req.file.filename : "";
 
     const newProduct = new Product({
@@ -167,6 +244,8 @@ app.post("/products", upload.single("image"), async (req, res) => {
       category,
       subcategory,
       price: Number(price),
+      stock: stock ? Number(stock) : 25,
+      description: description || "",
       image,
     });
 
@@ -177,13 +256,109 @@ app.post("/products", upload.single("image"), async (req, res) => {
   }
 });
 
+/* ================= UPDATE PRODUCT ================= */
+app.put("/products/:id", upload.single("image"), async (req, res) => {
+  try {
+    const { name, category, subcategory, price, stock, description } = req.body;
+    const updateData = {};
+    if (name) updateData.name = name;
+    if (category) updateData.category = category;
+    if (subcategory !== undefined) updateData.subcategory = subcategory;
+    if (price !== undefined) updateData.price = Number(price);
+    if (stock !== undefined) updateData.stock = Number(stock);
+    if (description !== undefined) updateData.description = description;
+    if (req.file) updateData.image = req.file.filename;
 
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+    if (!updatedProduct) return res.status(404).json({ error: "Product not found" });
+    res.json({ message: "Product updated successfully! ✅", product: updatedProduct });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= QUICK STOCK UPDATE ================= */
+app.patch("/products/:id/stock", async (req, res) => {
+  try {
+    const { stock, delta } = req.body;
+    let updatedProduct;
+    if (delta !== undefined) {
+      updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        { $inc: { stock: Number(delta) } },
+        { new: true }
+      );
+    } else if (stock !== undefined) {
+      updatedProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        { stock: Number(stock) },
+        { new: true }
+      );
+    }
+    if (!updatedProduct) return res.status(404).json({ error: "Product not found" });
+    res.json({ message: "Stock updated! 📦", product: updatedProduct });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 /* ================= DELETE PRODUCT ================= */
 app.delete("/products/:id", async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.json({ message: "Product deleted successfully! 🗑️" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= ADMIN STATS ================= */
+app.get("/admin/stats", async (req, res) => {
+  try {
+    const [orders, products] = await Promise.all([
+      Order.find(),
+      Product.find()
+    ]);
+
+    const totalRevenue = orders.reduce((sum, o) => sum + (Number(o.totalAmount) || 0), 0);
+    const totalOrders = orders.length;
+    const totalProducts = products.length;
+    const avgOrderValue = totalOrders > 0 ? Math.round(totalRevenue / totalOrders) : 0;
+
+    // Category breakdown
+    const categoryCounts = {};
+    products.forEach(p => {
+      const cat = p.category || "Other";
+      categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+    });
+
+    // Payment methods
+    const paymentMethods = { cod: 0, card: 0, razorpay: 0 };
+    orders.forEach(o => {
+      const pm = (o.paymentMethod || "card").toLowerCase();
+      paymentMethods[pm] = (paymentMethods[pm] || 0) + 1;
+    });
+
+    // Status breakdown
+    const statusCounts = { Processing: 0, Shipped: 0, Delivered: 0, Cancelled: 0 };
+    orders.forEach(o => {
+      const st = o.status || "Processing";
+      statusCounts[st] = (statusCounts[st] || 0) + 1;
+    });
+
+    res.json({
+      totalRevenue,
+      totalOrders,
+      totalProducts,
+      avgOrderValue,
+      categoryCounts,
+      paymentMethods,
+      statusCounts
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
